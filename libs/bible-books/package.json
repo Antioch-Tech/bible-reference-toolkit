@@ -1,5 +1,5 @@
 {
-  "name": "bible-books",
+  "name": "bible-book-names-intl",
   "version": "2.0.9",
   "description": "Bible Book Names in Multiple Languages",
   "repository": {
@@ -31,11 +31,13 @@
   "devDependencies": {
     "bun-types": "^1.0.1",
     "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "jest": "^27.4.7"
   },
   "scripts": {
     "build": "tsc",
-    "test": "bun test src/**/*.test.ts ",
+    "test:bun": "bun test src/**/*.test.ts ",
+    "test": "jest",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"
   }

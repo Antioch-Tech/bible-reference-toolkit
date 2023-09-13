@@ -10,6 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "outDir": "dist",
+    "resolveJsonModule": true,
     //    "outFile": "dist/index.js",  /* Concatenate and emit output to single file. */
     /* Redirect output structure to the directory. */
   },
