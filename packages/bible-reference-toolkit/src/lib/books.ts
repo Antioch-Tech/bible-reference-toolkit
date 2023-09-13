@@ -1,3 +1,3 @@
-import BibleBooks from 'bible-book-names-intl';
+import BibleBooks from '@antioch-tech-bible-source/bible-books';
 
 export default BibleBooks;

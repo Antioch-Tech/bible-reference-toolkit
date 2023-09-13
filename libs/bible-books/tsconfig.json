@@ -4,19 +4,23 @@
     "module": "commonjs",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    //    "noImplicitOverride": true,
-    //    "noPropertyAccessFromIndexSignature": true,
-    //    "noImplicitReturns": true,
+//    "noImplicitOverride": true,
+//    "noPropertyAccessFromIndexSignature": true,
+//    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "outDir": "dist",
     //    "outFile": "dist/index.js",  /* Concatenate and emit output to single file. */
-    "declaration": true,
-    "types": ["node"],
-    "resolveJsonModule": true
+    /* Redirect output structure to the directory. */
   },
   "files": [],
-  "include": ["src/**/*.ts", "index.ts"],
-  "exclude": ["node_modules", "**/*.test.ts"],
-  "references": []
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

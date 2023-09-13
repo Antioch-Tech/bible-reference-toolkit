@@ -1,7 +1,7 @@
 {
-  "name": "bible-reference-toolkit",
-  "version": "2.0.8",
-  "description": "Normalize bible references, convert them to machine readable formats, query and manipulate them",
+  "name": "bible-books",
+  "version": "2.0.9",
+  "description": "Bible Book Names in Multiple Languages",
   "repository": {
     "type": "git",
     "url": "https://github.com/tim-hub/bible-reference-toolkit"
@@ -18,19 +18,24 @@
   "keywords": [
     "bible",
     "biblejs",
-    "bible query",
-    "bible reference",
+    "bible books",
+    "bible books reference",
     "bible reference toolkit"
   ],
-  "main": "dist/index.js",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "dist/index.ts",
+  "typings": "dist/index.d.ts",
   "devDependencies": {
     "bun-types": "^1.0.1",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "test": "bun test src/test/*.test.ts ",
-    "build": "rimraf dist && tsc",
+    "build": "tsc",
+    "test": "bun test src/**/*.test.ts ",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"
   }
