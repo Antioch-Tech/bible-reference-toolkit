@@ -5,40 +5,83 @@ import {
 import baseData from './data/base.json';
 import en from './data/translations/en.json'
 import it from './data/translations/it.json'
+import jp from './data/translations/jp.json'
+
+const allTranslations = [
+  en,
+  it,
+  jp,
+]
+
 
 type Book = {
   names: string[];
   verses: number[];
-  startWithNumber?: boolean;
   startNumber?: number;
 };
 
-const BookWithNamesAndChapterVersesCount: Book[] = [];
-
-const allWesternTranslations = [
-  en,
-  it,
-]
-
-for (let i = 0; i < 66; i++) {
-  const book = (baseData as any)['' + (i + 1)];
-
-  allWesternTranslations.forEach((translation: any) => {
-    let newNames = translation[i];
-    if (book?.names?.length) {
-      newNames = book.names.concat(translation[i]);
-    }
-    book.names = newNames; //todo use set here
-  });
-  BookWithNamesAndChapterVersesCount.push(book);
+export type BookWithFullNameAndShortNames = Book & {
+  fullName: string;
+  shortNames: string[];
 }
 
-// todo support non western translations
 
-BookWithNamesAndChapterVersesCount.forEach((book, index) => {
-  if (book?.startNumber && book?.startNumber > 0) {
-    book.names = generateOrdinalNameVariations(book.startNumber, book.names);
+const translationsDict = new Map<string, BookWithFullNameAndShortNames[]>()
+
+allTranslations.forEach(
+  (translation) => {
+    const books: BookWithFullNameAndShortNames[] = [];
+    for (let i = 0; i < 66; i++) {
+      const rawBookInfo = (translation as any)['' + (i + 1)];
+      const bookBaseData: { verses: number[] } = (baseData as any)['' + (i + 1)];
+
+      let newCombinedNames = rawBookInfo.shortNames.concat(rawBookInfo.name)
+      if (rawBookInfo?.startNumber > 0) {
+        newCombinedNames = generateOrdinalNameVariations(rawBookInfo.startNumber, newCombinedNames)
+      }
+      books.push({
+        ...bookBaseData,
+        fullName: rawBookInfo.name,
+        shortNames: rawBookInfo.shortNames,
+        startNumber: rawBookInfo?.startNumber, // should not be used anymore
+        names: newCombinedNames,
+      })
+    }
+    translationsDict.set(translation.language, books)
   }
-});
+)
 
-export default BookWithNamesAndChapterVersesCount;
+export const getTranslationBooks = (language: string) => {
+  if (!translationsDict.has(language)) {
+    const msg = `No translation found for language ${language}`
+    console.error(msg)
+    throw new Error(msg)
+  }
+  return translationsDict.get(language)
+}
+
+
+const MultipleLanguageBibleBooks: BookWithFullNameAndShortNames[] = [];
+
+
+for (let i = 0; i < 66; i++) {
+  const book = {
+    // @ts-ignore
+    fullName: translationsDict?.get('en')[i].fullName as string,
+    // @ts-ignore
+    verses: translationsDict?.get('en')[i].verses as number[],
+    names: [] as string[],
+    shortNames: [] as string[],
+  }
+
+  translationsDict.forEach((books) => {
+    // concat all names from different translations
+    book['shortNames'] = [...(new Set(book['shortNames'].concat(books[i].shortNames)))]
+    book['names'] = [...(new Set(book['names'].concat(books[i].fullName)))] // add full names to list
+  })
+  book['names'] = [...book['names'], ...book['shortNames']] // combine them (full and short) together as names
+  MultipleLanguageBibleBooks.push(book);
+}
+
+
+export default MultipleLanguageBibleBooks;

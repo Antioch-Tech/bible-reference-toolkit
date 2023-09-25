@@ -1,3 +1,4 @@
-import BibleBooks from '@antioch-tech-bible-source/bible-books';
+import Books from '@antioch-tech-bible-source/bible-books';
 
-export default BibleBooks;
+export { getTranslationBooks } from '@antioch-tech-bible-source/bible-books';
+export const BibleBooks = Books;
