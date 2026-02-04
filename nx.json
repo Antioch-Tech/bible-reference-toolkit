@@ -4,20 +4,6 @@
   "affected": {
     "defaultBase": "master"
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "NGY4Yjk1ODEtYmE1Zi00ZWYwLTkzMGYtZmUyMjNmM2Y4ZWZhfHJlYWQtd3JpdGU="
-      }
-    }
-  },
   "workspaceLayout": {
     "projectNameAndRootFormat": "as-provided"
   },
